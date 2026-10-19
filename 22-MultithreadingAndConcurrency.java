@@ -298,3 +298,241 @@ final class Person {
 # Manages thread creation and scheduling.
 ExecutorService service =
       Executors.newFixedThreadPool(5);
+# Benefits:
+# - Reuse threads
+# - Better performance
+# - Simpler code
+
+# 26. Executor
+# Basic interface.
+Executor executor =
+    Executors.newFixedThreadPool(3);
+
+executor.execute(task);
+
+# 27. ExecutorService
+# Advanced executor.
+ExecutorService service =
+        Executors.newFixedThreadPool(4);
+# Methods:
+submit()
+shutdown()
+shutdownNow()
+invokeAll()
+invokeAny()
+
+# 28. ScheduledExecutorService
+# Schedules tasks.
+ScheduledExecutorService scheduler =
+        Executors.newScheduledThreadPool(1);
+
+scheduler.schedule(
+        task,
+        5,
+        TimeUnit.SECONDS
+);
+
+# 29. Thread Pools
+# Types:
+newFixedThreadPool()
+newCachedThreadPool()
+newSingleThreadExecutor()
+newScheduledThreadPool()
+
+# 30. ThreadPoolExecutor
+# Core implementation.
+ThreadPoolExecutor executor =
+   new ThreadPoolExecutor(
+      2,
+      5,
+      60,
+      TimeUnit.SECONDS,
+      new LinkedBlockingQueue<>()
+   );
+
+# 31. CompletableFuture
+# Modern asynchronous programming.
+CompletableFuture
+        .supplyAsync(() -> "Hello")
+        .thenApply(String::toUpperCase)
+        .thenAccept(System.out::println);
+
+# Output: HELLO
+
+# 32. CountDownLatch
+# Waits until tasks complete.
+CountDownLatch latch =
+        new CountDownLatch(3);
+
+latch.await();
+
+# 33. CyclicBarrier
+# All threads wait for each other.
+CyclicBarrier barrier =
+        new CyclicBarrier(3);
+# When 3 threads reach barrier:
+Continue together
+
+# 34. Semaphore
+# Controls access count.
+Semaphore sem =
+        new Semaphore(3);
+# Only 3 threads allowed simultaneously.
+
+# 35. Phaser
+# Advanced synchronization.
+# Supports dynamic participants.
+Phaser phaser = new Phaser(3);
+
+# 36. ReentrantLock
+# Alternative to synchronized.
+Lock lock = new ReentrantLock();
+
+lock.lock();
+
+try {
+   count++;
+}
+finally {
+   lock.unlock();
+}
+# Advantages:
+# - Fair locking
+# - tryLock()
+# - Interruptible locks
+
+# 37. ReadWriteLock
+# Multiple readers, one writer.
+ReadWriteLock lock =
+        new ReentrantReadWriteLock();
+# Read: lock.readLock().lock();
+# Write: lock.writeLock().lock();
+
+# 38. Condition
+# Replacement for wait/notify.
+Condition condition =
+        lock.newCondition();
+# Methods:
+await()
+signal()
+signalAll()
+
+# 39. Atomic Variables
+# Lock-free thread-safe operations.
+AtomicInteger count =
+        new AtomicInteger(0);
+
+count.incrementAndGet();
+# Types:
+AtomicInteger
+AtomicLong
+AtomicBoolean
+AtomicReference
+
+# 40. Concurrent Collections
+# Thread-safe collections.
+# Examples:
+ConcurrentHashMap
+CopyOnWriteArrayList
+ConcurrentLinkedQueue
+
+# 41. Blocking Queues
+# Used in Producer-Consumer pattern.
+BlockingQueue<Integer> queue =
+        new ArrayBlockingQueue<>(10);
+# Methods:
+put()
+take()
+
+# 42. Fork/Join Framework
+# Splits large task into subtasks.
+ForkJoinPool pool =
+        new ForkJoinPool();
+
+# 43. Work Stealing
+# Idle threads steal tasks from busy threads.
+# Improves CPU utilization.
+# Used by: ForkJoinPool
+
+# 44. Java Memory Model (JMM)
+# Defines:
+# - Thread interaction
+# - Visibility
+# - Ordering
+# - Atomicity
+# Ensures predictable behavior across CPUs.
+
+# 45. Happens-Before Relationship
+# Guarantees visibility.
+# Examples:
+unlock happens-before lock
+write to volatile
+happens-before
+read of volatile
+thread.start()
+# happens-before all actions in thread.
+
+# 46. Virtual Threads (Java 21+)
+# Lightweight threads introduced by Project Loom.
+Thread.startVirtualThread(() -> {
+    System.out.println("Virtual Thread");
+});
+# Advantages:
+# - Millions of threads
+# - Low memory usage
+# - Great for I/O operations
+
+# 47. Structured Concurrency Concepts
+# Treat concurrent tasks as one unit of work.
+# Traditional:
+Task A
+Task B
+Task C
+# Hard to manage failures.
+# Structured concurrency:
+Parent Task
+ ├─ Child A
+ ├─ Child B
+ └─ Child C
+# If one fails:
+All related tasks handled together
+# Benefits:
+# - Better cancellation
+# - Better error handling
+# - Easier debugging
+
+# Interview Questions
+# Q1. Difference between Runnable and Callable?
+| Runnable             | Callable            |
+| -------------------- | ------------------- |
+| run()                | call()              |
+| No return value      | Returns value       |
+| No checked exception | Can throw exception |
+
+# Q2. synchronized vs ReentrantLock?
+| synchronized        | ReentrantLock    |
+| ------------------- | ---------------- |
+| Simpler             | More flexible    |
+| JVM managed         | API managed      |
+| No tryLock()        | Has tryLock()    |
+| No fairness control | Fairness support |
+
+# Q3. volatile vs synchronized?
+| volatile        | synchronized           |
+| --------------- | ---------------------- |
+| Visibility only | Visibility + Atomicity |
+| Non-blocking    | Uses lock              |
+| Fast            | Slower                 |
+
+# Q4. Deadlock vs Starvation?
+# Deadlock: Threads wait forever for each other.
+# Starvation: Thread never gets required resource even though system is running.
+
+# Q5. What is CompletableFuture?
+# A powerful API for asynchronous, non-blocking programming that supports task chaining, combining, and exception handling.
+CompletableFuture.supplyAsync(() -> 10)
+                 .thenApply(x -> x * 2)
+                 .thenAccept(System.out::println);
+# Output: 20
+
+# This covers the complete Java Multithreading, Synchronization, and Concurrency Utilities roadmap from basic thread creation to modern features like Virtual Threads and Structured Concurrency.
